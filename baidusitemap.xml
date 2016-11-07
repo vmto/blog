@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/11/07/ng-router/</loc>
+    <lastmod>2016-11-07T04:28:42.838Z</lastmod>
+    <data>
+        <display>
+        <title>AngularJs之路由</title>
+        <pubTime>2016-11-07T03:45:09.000Z</pubTime>
+        
+        <tag>router</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/18/data-type/</loc>
+    <lastmod>2016-11-07T04:25:29.989Z</lastmod>
+    <data>
+        <display>
+        <title>data-type</title>
+        <pubTime>2016-10-18T10:23:29.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/18/geek/</loc>
+    <lastmod>2016-10-18T09:59:29.877Z</lastmod>
+    <data>
+        <display>
+        <title>关于Geek精神</title>
+        <pubTime>2016-10-18T06:39:48.000Z</pubTime>
+        
+        <tag>geek</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/18/ng-class/</loc>
+    <lastmod>2016-10-18T03:10:26.257Z</lastmod>
+    <data>
+        <display>
+        <title>AngularJS ng-class用法</title>
+        <pubTime>2016-10-18T02:34:41.000Z</pubTime>
+        
+        <tag>Angular</tag>
+         
+        <tag>ng-class</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/10/closure/</loc>
+    <lastmod>2016-10-17T06:04:36.929Z</lastmod>
+    <data>
+        <display>
+        <title>闭包的更多作用</title>
+        <pubTime>2016-10-10T04:00:57.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/14/count-down/</loc>
+    <lastmod>2016-10-17T02:30:52.395Z</lastmod>
+    <data>
+        <display>
+        <title>手机验证码倒计时(防重复点击)</title>
+        <pubTime>2016-10-14T10:18:21.000Z</pubTime>
+        
+        <tag>倒计时</tag>
+         
+        <tag>手机验证码</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://vmto.github.io/2016/10/10/Node-MySQL/</loc>
+    <lastmod>2016-10-11T06:13:46.001Z</lastmod>
+    <data>
+        <display>
+        <title>Node连接Mysql数据库</title>
+        <pubTime>2016-10-10T03:47:50.669Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+</urlset>

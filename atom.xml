@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>全站联盟</title>
+  <subtitle>不积跬步 无以至千里 不积小流 无以成江海</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://vmto.github.io/"/>
+  <updated>2016-11-07T04:28:42.838Z</updated>
+  <id>https://vmto.github.io/</id>
+  
+  <author>
+    <name>Saturn</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AngularJs之路由</title>
+    <link href="https://vmto.github.io/2016/11/07/ng-router/"/>
+    <id>https://vmto.github.io/2016/11/07/ng-router/</id>
+    <published>2016-11-07T03:45:09.000Z</published>
+    <updated>2016-11-07T04:28:42.838Z</updated>
+    
+    <content type="html"><![CDATA[<p>AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例<br><a id="more"></a></p>
+<h2 id="ngRouter基本使用"><a href="#ngRouter基本使用" class="headerlink" title="ngRouter基本使用"></a>ngRouter基本使用</h2><p>这是一个最基本的路由，运行成功显示Hello Router，<br>Angular的ng-include、ng-router使用了XMLHttpRequest对象，需通过http访问！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;</div><div class="line">    &lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div&gt;Hello Router&lt;/div&gt;'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>以上html引入两个js文件：angular.min.js、angular-route.min.js<br>angular-route.min.js压缩后只有5KB，<br>为了减少http请求，我把它合并到1个js文件里了。</p>
+<h2 id="ngRouter基本配置"><a href="#ngRouter基本配置" class="headerlink" title="ngRouter基本配置"></a>ngRouter基本配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">//引入依赖的模块ngRoute</div><div class="line"></div><div class="line">app.config();</div><div class="line">//传入一个匿名函数</div><div class="line">//在匿名函数中注入依赖：<span class="variable">$routeProvider</span></div><div class="line"></div><div class="line"><span class="variable">$routeProvider</span>.when();</div><div class="line">//when()两个参数(路径，对象)</div><div class="line">//when()第二个对象：</div><div class="line">//指定使用哪个控制器controller：ctrlName，</div><div class="line">//指定模板template：<span class="string">'&lt;div&gt;&lt;/div&gt;'</span></div><div class="line">//或者templateUrl：tplName.html</div></pre></td></tr></table></figure>
+<h2 id="ngRouter高级使用"><a href="#ngRouter高级使用" class="headerlink" title="ngRouter高级使用"></a>ngRouter高级使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;&lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.controller(<span class="string">'oneCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.name=<span class="string">'hello oneCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.controller(<span class="string">'twoCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.str=<span class="string">'hello twoCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div class="one"&gt; &#123;&#123;name&#125;&#125; &lt;a href="#/tow"&gt;下一页&lt;/a&gt;&lt;/div&gt;'</span>,</div><div class="line">                controller:<span class="string">'oneCtrl'</span></div><div class="line">            &#125;).when(<span class="string">'/tow'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div class="tow"&gt;&#123;&#123;str&#125;&#125; &lt;a href="#/one"&gt;下一页&lt;/a&gt;&lt;/div&gt;'</span>,</div><div class="line">                controller:<span class="string">'twoCtrl'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>高级用法涉及到了controller，在实际应用中会经常把路由和控制配合使用。</p>
+<h2 id="ngRouter实战"><a href="#ngRouter实战" class="headerlink" title="ngRouter实战"></a>ngRouter实战</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;&lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.controller(<span class="string">'oneCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.name=<span class="string">'hello oneCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.controller(<span class="string">'twoCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.str=<span class="string">'hello twoCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                templateUrl:<span class="string">'two.html'</span>,//此处指向了一个html文件（文件内容同上）</div><div class="line">                controller:<span class="string">'oneCtrl'</span></div><div class="line">            &#125;).when(<span class="string">'/tow'</span>,&#123;</div><div class="line">                templateUrl:<span class="string">'two.html'</span>,//此处指向了一个html文件（文件内容同上）</div><div class="line">                controller:<span class="string">'twoCtrl'</span></div><div class="line">            &#125;).otherwise(&#123;</div><div class="line">                //其他路径（未定义的），一律跳转到指定路径（一般指向首页）</div><div class="line">                redirectTo:<span class="string">'/one'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>ngRoute很容易上手，实际项目中一般多用templateUrl指定模板，<br>也可以在模板里用ng-include进行嵌套，需要注意的是：<br>ng-include=””，引号内的值一般被angular认为是变量，<br>正确的写法应该是：ng-include=”‘xxx.html’”</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="router" scheme="https://vmto.github.io/tags/router/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>data-type</title>
+    <link href="https://vmto.github.io/2016/10/18/data-type/"/>
+    <id>https://vmto.github.io/2016/10/18/data-type/</id>
+    <published>2016-10-18T10:23:29.000Z</published>
+    <updated>2016-11-07T04:25:29.989Z</updated>
+    
+    <content type="html"><![CDATA[<p>待续…</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;待续…&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于Geek精神</title>
+    <link href="https://vmto.github.io/2016/10/18/geek/"/>
+    <id>https://vmto.github.io/2016/10/18/geek/</id>
+    <published>2016-10-18T06:39:48.000Z</published>
+    <updated>2016-10-18T09:59:29.877Z</updated>
+    
+    <content type="html"><![CDATA[<p>牛津词典中，对Geek的注释为： 一些行为古怪、性格孤僻的人。随着互联网的发展与普及，后来「Geek 」往往指对计算机和网络技术有狂热兴趣并投入大量时间钻研的人。他们不停地倒腾着，用自己的行为诠释着自己对于技术的理解。</p>
+<a id="more"></a>
+<h4 id="牛津词典对Geek的注释"><a href="#牛津词典对Geek的注释" class="headerlink" title="牛津词典对Geek的注释"></a>牛津词典对Geek的注释</h4><blockquote>
+<p>一些行为古怪、性格孤僻的人。<br>随着互联网的发展与普及，后来「Geek 」往往指对计算机和网络技术有狂热兴趣并投入大量时间钻研的人。<br>他们不停地倒腾着，用自己的行为诠释着自己对于技术的理解。</p>
+</blockquote>
+<h4 id="对于普通群众来说"><a href="#对于普通群众来说" class="headerlink" title="对于普通群众来说"></a>对于普通群众来说</h4><blockquote>
+<p>「Geek 」是神奇生物，是个传说，是个谜！</p>
+</blockquote>
+<h4 id="现在「Geek-」不仅仅是代词"><a href="#现在「Geek-」不仅仅是代词" class="headerlink" title="现在「Geek 」不仅仅是代词"></a>现在「Geek 」不仅仅是代词</h4><blockquote>
+<p>它有了更多的内涵，已然成为一种精神象征，一种生活态度，一种人生哲学。</p>
+</blockquote>
+<h4 id="专注探索"><a href="#专注探索" class="headerlink" title="专注探索"></a>专注探索</h4><blockquote>
+<p>Geek的特质最吸引我的是好奇、热情──赤子之心，不断失败但仍不断尝试，随时准备为新的探索而放弃已经取得的成就。@知乎 麦烧同学</p>
+</blockquote>
+<h4 id="独立自由"><a href="#独立自由" class="headerlink" title="独立自由"></a>独立自由</h4><blockquote>
+<p>不喜欢盲目的被告知结论，不喜欢追随大流。@知乎 曹婷婷</p>
+</blockquote>
+<h4 id="乐于分享"><a href="#乐于分享" class="headerlink" title="乐于分享"></a>乐于分享</h4><blockquote>
+<p>Geek骨子里都是乐于分享的，不会在乎你是否懂得他的talent，他都乐于向你分享成果，你只要给他足够的掌声就OK了。@知乎 钱鲲</p>
+</blockquote>
+<h4 id="当我们说「Geek」的时候我们在说什么"><a href="#当我们说「Geek」的时候我们在说什么" class="headerlink" title="当我们说「Geek」的时候我们在说什么"></a>当我们说「Geek」的时候我们在说什么</h4><blockquote>
+<p>我想，当我们在说「Geek」的时候，<br>我们实际在说的是“创新、自由、分享”这些美好的品格特质。<br>这些的特质被统一抽象为：「极客精神」</p>
+</blockquote>
+<h4 id="比如他们："><a href="#比如他们：" class="headerlink" title="比如他们："></a>比如他们：</h4><blockquote>
+<p>尼古拉·特斯拉（交流电之父、无线电之父、埃隆·马斯克的偶像）<br>阿兰·图灵（计算机之父、人工智能之父）<br>丹尼斯·里奇（C语言之父、Unix之父）<br>史蒂夫·乔布斯<br>埃隆·马斯克</p>
+</blockquote>
+<h4 id="史蒂夫·乔布斯"><a href="#史蒂夫·乔布斯" class="headerlink" title="史蒂夫·乔布斯"></a>史蒂夫·乔布斯</h4><ul>
+<li>1976年4月创建「苹果」电脑公司</li>
+<li>1977年4月苹果Ⅱ号在计算机展览会上一鸣惊人</li>
+<li>1980年12月苹果公司股票公开上市</li>
+<li>1983年 Lisa 数据库和 Apple lie 发布</li>
+<li>1985年被迫离开公司，次年成立「皮克斯」动画工作室</li>
+<li>1995年推出全球首部全3D动画电影《玩具总动员》</li>
+<li>1996年乔帮主于苹果危难之际重新回来，次年推出 iMac 和 Mac OS X 操作系统</li>
+<li>2001年10月推出多媒体播放器 iPod MP3</li>
+<li>2003年4月 iTunes 店开通</li>
+<li>2005年10月推出 iPod Video</li>
+<li>2006年10月推出第1代 MacBook Pro</li>
+<li>同年「皮克斯」被「迪士尼」以74亿美元收购</li>
+<li>2007年6月推出 iPhone 手机及iPod Touch 和  iOS 系统</li>
+<li>2009年6发布第2代 MacBook Pro</li>
+<li>2010年6月推出 iPhone 4手机以及iPod平板电脑系列</li>
+<li>2012年发布第3代 MacBook Pro</li>
+<li>2013年9月推出 iPhone 5s手机</li>
+</ul>
+<h4 id="埃隆·马斯克（我的偶像）"><a href="#埃隆·马斯克（我的偶像）" class="headerlink" title="埃隆·马斯克（我的偶像）"></a>埃隆·马斯克（我的偶像）</h4><ul>
+<li>12岁制作游戏 Blastar 并卖了500美元</li>
+<li>1995年创办Zip2并在4年后卖了2200万美金</li>
+<li>1999年3月创办在线银行，后更名为 Paypal 于2002年卖了1.8亿美金（税后）</li>
+<li>2001年去俄国买火箭准备把它发送到火星，次年6月创办火箭公司 SpaceX</li>
+<li>2004年融资「特斯拉」电功汽车</li>
+<li>2005年，34岁的马斯克，互联网、清洁能源和太空这三个理想在40岁之前刚好实现</li>
+<li>2008年第三次发射火箭失败摧毁了所携带的4枚卫星，9月第四次发射火箭成功</li>
+<li>同年马斯克把自己仅存的6000万美金全部投入生产「特斯拉」</li>
+<li>2012年 Model S 正式量产销售</li>
+<li>2011年历经12次谈判拿到白宫16亿美金的太空项目</li>
+<li>2012年5月成为世界上第一个掌握火箭可回收技术的人</li>
+<li>此时，世界上掌握了航天器发射回收技术的只有四个：美国、俄罗斯、中国，还有埃隆·马斯克。</li>
+<li>2013年提出 Hyper Loop 设计方案，一种时速1200公里的超级高铁</li>
+<li>2014年 Model X 正式量产销售</li>
+<li>2016年计划 Falcon Heavy 重型火箭首飞，可携带37颗卫星</li>
+<li>2017年计划发售「特斯拉3」，续航350公里，售价3.5万美金</li>
+<li>2020年开始运营 Hyper Loop</li>
+<li>2025年发射火星殖民运输飞船</li>
+<li>有生之年，去往火星的船票每张50万美金</li>
+</ul>
+<h4 id="所谓「Geek」"><a href="#所谓「Geek」" class="headerlink" title="所谓「Geek」"></a>所谓「Geek」</h4><p>就是那些具有「极客精神 」的人。<br>也许是你、是我、是他。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;牛津词典中，对Geek的注释为： 一些行为古怪、性格孤僻的人。随着互联网的发展与普及，后来「Geek 」往往指对计算机和网络技术有狂热兴趣并投入大量时间钻研的人。他们不停地倒腾着，用自己的行为诠释着自己对于技术的理解。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="geek" scheme="https://vmto.github.io/tags/geek/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AngularJS ng-class用法</title>
+    <link href="https://vmto.github.io/2016/10/18/ng-class/"/>
+    <id>https://vmto.github.io/2016/10/18/ng-class/</id>
+    <published>2016-10-18T02:34:41.000Z</published>
+    <updated>2016-10-18T03:10:26.257Z</updated>
+    
+    <content type="html"><![CDATA[<p>ng-class是AngularJS预设的一个指令，用于动态自定义dom元素的css class name。<br>ng-class在实际的应用场景中还是比较灵活的，而在AngularJS中一般有三种方式给元素的class属性做一些门道<br><a id="more"></a></p>
+<h3 id="scope变量绑定（不推荐使用）"><a href="#scope变量绑定（不推荐使用）" class="headerlink" title="scope变量绑定（不推荐使用）"></a>scope变量绑定（不推荐使用）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-app=<span class="string">"app"</span> ng-controller=<span class="string">"ctrl1"</span>&gt;</div><div class="line">    &lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">        .redFont&#123;color: red;&#125;</div><div class="line">    &lt;/style&gt;</div><div class="line"></div><div class="line">    &lt;div class=<span class="string">"&#123;&#123;test&#125;&#125;"</span>&gt;红字&lt;/div&gt;</div><div class="line"></div><div class="line">    &lt;script&gt;</div><div class="line">        var app=angular.module(<span class="string">'app'</span>,[]);</div><div class="line">        app.controller(<span class="string">'ctrl1'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.test=<span class="string">"redFont"</span>;</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div></pre></td></tr></table></figure>
+<p>说明<br>这种方式完全没错，是angular提供的一种改变class的方式，但是在controller涉及了className是不是有点诡异，我们希望的controller是一个干净的纯javascript意义的object。</p>
+<h3 id="字符串数组形式"><a href="#字符串数组形式" class="headerlink" title="字符串数组形式"></a>字符串数组形式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-app=<span class="string">"app"</span> ng-controller=<span class="string">"ctrl1"</span>&gt;</div><div class="line">    &lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">        .redFont&#123;color: red;&#125;</div><div class="line">        .blueFont&#123;color: blue;&#125;</div><div class="line">    &lt;/style&gt;</div><div class="line"></div><div class="line">    &lt;div ng-class=<span class="string">"&#123;true: 'redFont', false: 'blueFont'&#125;[isActive]"</span>&gt;字体颜色&lt;/div&gt;</div><div class="line"></div><div class="line">    &lt;script&gt;</div><div class="line">        var app=angular.module(<span class="string">'app'</span>,[]);</div><div class="line">        app.controller(<span class="string">'ctrl1'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.isActive=<span class="literal">true</span>;</div><div class="line">            // <span class="variable">$scope</span>.isActive=<span class="literal">false</span>;</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div></pre></td></tr></table></figure>
+<p>说明<br>其结果是2中组合，isActive表达式为true，则 redFont，否则blueFont。</p>
+<h3 id="对象key-value处理"><a href="#对象key-value处理" class="headerlink" title="对象key/value处理"></a>对象key/value处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-app=<span class="string">"app"</span> ng-controller=<span class="string">"ctrl1"</span>&gt;</div><div class="line">    &lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">        .redFont&#123;color: red;&#125;</div><div class="line">        .blueBg&#123;background-color: blue;&#125;</div><div class="line">    &lt;/style&gt;</div><div class="line"></div><div class="line">    &lt;div ng-class=<span class="string">"&#123;'redFont': isRedFont, 'blueBg': isBlueBg&#125;"</span>&gt;文字颜色、背景颜色&lt;/div&gt;</div><div class="line"></div><div class="line">    &lt;script&gt;</div><div class="line">        var app=angular.module(<span class="string">'app'</span>,[]);</div><div class="line">        app.controller(<span class="string">'ctrl1'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.isRedFont=<span class="literal">true</span>;</div><div class="line">            <span class="variable">$scope</span>.isBlueBg=<span class="literal">true</span>;</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div></pre></td></tr></table></figure>
+<p>说明<br>当 isRedFont=true 则增加redFont class，当isBlueBg=true,则增加blueBg class。<br>此处注意：{ }里面的表达式，加单引号是字符串，不加单引号是变量。</p>
+<p>个人推荐用2，3两种方式，不建议将class放入controller scope之上，scope需要保持纯洁行，scope上的只能是数据和行为。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://docs.angularjs.org/api/ng/directive/ngClass" target="_blank" rel="external">docs.angularjs.org/api/ng/directive/ngClass</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ng-class是AngularJS预设的一个指令，用于动态自定义dom元素的css class name。&lt;br&gt;ng-class在实际的应用场景中还是比较灵活的，而在AngularJS中一般有三种方式给元素的class属性做一些门道&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Angular" scheme="https://vmto.github.io/tags/Angular/"/>
+    
+      <category term="ng-class" scheme="https://vmto.github.io/tags/ng-class/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>手机验证码倒计时(防重复点击)</title>
+    <link href="https://vmto.github.io/2016/10/14/count-down/"/>
+    <id>https://vmto.github.io/2016/10/14/count-down/</id>
+    <published>2016-10-14T10:18:21.000Z</published>
+    <updated>2016-10-17T02:30:52.395Z</updated>
+    
+    <content type="html"><![CDATA[<p>获取手机验证码的倒计时<br><a id="more"></a></p>
+<h2 id="封装函数"><a href="#封装函数" class="headerlink" title="封装函数"></a>封装函数</h2><p>获取手机验证码的倒计时<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"获取验证码"</span> id=<span class="string">"btn1"</span>&gt;</div><div class="line">window.onload = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var <span class="built_in">wait</span>=60;</div><div class="line">    <span class="keyword">function</span> time(o) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">wait</span> == 0) &#123;</div><div class="line">            o.removeAttribute(<span class="string">"disabled"</span>);</div><div class="line">            o.value=<span class="string">"获取验证码"</span>;</div><div class="line">            <span class="built_in">wait</span> = 60;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            o.setAttribute(<span class="string">"disabled"</span>, <span class="literal">true</span>);</div><div class="line">            o.value=<span class="string">"重新发送("</span> + <span class="built_in">wait</span> + <span class="string">")"</span>;</div><div class="line">            <span class="built_in">wait</span>--;</div><div class="line">            <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                time(o)</div><div class="line">            &#125;,1000);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    document.getElementById(<span class="string">"btn"</span>).onclick=<span class="function"><span class="title">function</span></span>()&#123;time(this);&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="封装函数-jQuery"><a href="#封装函数-jQuery" class="headerlink" title="封装函数(jQuery)"></a>封装函数(jQuery)</h2><p>获取手机验证码的倒计时<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"获取验证码"</span> id=<span class="string">"btn1"</span>&gt;</div><div class="line">$(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var <span class="built_in">wait</span>=5;</div><div class="line">    <span class="keyword">function</span> time(el)&#123;console.log(<span class="built_in">wait</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">wait</span>==0)&#123;</div><div class="line">            el.removeAttr(<span class="string">'disabled'</span>);</div><div class="line">            el.val(<span class="string">'重新获取'</span>);</div><div class="line">            <span class="built_in">wait</span>=5;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            el.attr(<span class="string">'disabled'</span>,<span class="literal">true</span>);</div><div class="line">            el.val(<span class="string">'稍等片刻（'</span>+ <span class="built_in">wait</span> +<span class="string">'）'</span>);</div><div class="line">            <span class="built_in">wait</span>--;</div><div class="line">            <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                time(el);</div><div class="line">            &#125;,1000);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    $(<span class="string">'#btn1'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        var self=$(this);</div><div class="line">        time(self);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;获取手机验证码的倒计时&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="倒计时" scheme="https://vmto.github.io/tags/%E5%80%92%E8%AE%A1%E6%97%B6/"/>
+    
+      <category term="手机验证码" scheme="https://vmto.github.io/tags/%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>闭包的更多作用</title>
+    <link href="https://vmto.github.io/2016/10/10/closure/"/>
+    <id>https://vmto.github.io/2016/10/10/closure/</id>
+    <published>2016-10-10T04:00:57.000Z</published>
+    <updated>2016-10-17T06:04:36.929Z</updated>
+    
+    <content type="html"><![CDATA[<p>闭包是 ECMAScript （JavaScript）最强大的特性之一，但用好闭包的前提是必须理解闭包。闭包的创建相对容易，人们甚至会在不经意间创建闭包，但这些无意创建的闭包却存在潜在的危害，尤其是在比较常见的浏览器环境下。</p>
+<p>如果想要扬长避短地使用闭包这一特性，则必须了解它们的工作机制。而闭包工作机制的实现很大程度上有赖于标识符（或者说对象属性）解析过程中作用域的角色。</p>
+<a id="more"></a>
+<p>虽然本文的前半部分并没有涉及 ECMA 262 规范指定的某些算法，但仍然有许多无法回避或简化的内容。对于个别熟悉对象属性名解析的人来说，可以跳过相关的内容，但是除非你对闭包也非常熟悉，否则最好是不要跳过下面几节。</p>
+<h2 id="封装变量"><a href="#封装变量" class="headerlink" title="封装变量"></a>封装变量</h2><p>闭包可以帮助把一些不需要暴露在全局的变量封装成“私有变量”。假设有一个计算乘积的简单函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var mult = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">var a = 1;</div><div class="line"><span class="keyword">for</span> ( var i = 0, l = arguments.length; i &lt; l; i++ )&#123;</div><div class="line">    a = a * arguments[i];</div><div class="line">&#125;</div><div class="line"><span class="built_in">return</span> a;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>mult函数接受一些number类型的参数，并返回这些参数的乘积。现在我们觉得对于那些相同的参数来说，每次都进行计算是一种浪费，我们可以加入缓存机制来提高这个函数的性能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var cache = &#123;&#125;;var mult = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">var args = Array.prototype.join.call( arguments, <span class="string">','</span> );</div><div class="line"><span class="keyword">if</span> ( cache[ args ] )&#123;</div><div class="line">    <span class="built_in">return</span> cache[ args ];</div><div class="line">&#125;</div><div class="line"></div><div class="line">var a = 1;</div><div class="line"><span class="keyword">for</span> ( var i = 0, l = arguments.length; i &lt; l; i++ )&#123;</div><div class="line">    a = a * arguments[i];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">return</span> cache[ args ] = a;&#125;;</div><div class="line">alert ( mult( 1,2,3 ) );     // 输出：6</div><div class="line">alert ( mult( 1,2,3 ) );     // 输出：6</div></pre></td></tr></table></figure>
+<p>我们看到cache这个变量仅仅在mult函数中被使用，与其让cache变量跟mult函数一起平行地暴露在全局作用域下，不如把它封闭在mult函数内部，这样可以减少页面中的全局变量，以避免这个变量在其他地方被不小心修改而引发错误。代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var mult = (<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">var cache = &#123;&#125;;</div><div class="line"><span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var args = Array.prototype.join.call( arguments, <span class="string">','</span> );</div><div class="line">    <span class="keyword">if</span> ( args <span class="keyword">in</span> cache )&#123;</div><div class="line">        <span class="built_in">return</span> cache[ args ];</div><div class="line">    &#125;</div><div class="line">    var a = 1;</div><div class="line">    <span class="keyword">for</span> ( var i = 0, l = arguments.length; i &lt; l; i++ )&#123;</div><div class="line">        a = a * arguments[i];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> cache[ args ] = a;</div><div class="line">&#125;&#125;)();</div></pre></td></tr></table></figure></p>
+<p>提炼函数是代码重构中的一种常见技巧。如果在一个大函数中有一些代码块能够独立出来，我们常常把这些代码块封装在独立的小函数里面。独立出来的小函数有助于代码复用，如果这些小函数有一个良好的命名，它们本身也起到了注释的作用。如果这些小函数不需要在程序的其他地方使用，最好是把它们用闭包封闭起来。代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var mult = (<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">var cache = &#123;&#125;;</div><div class="line">var calculate = <span class="function"><span class="title">function</span></span>()&#123;   // 封闭calculate函数</div><div class="line">    var a = 1;</div><div class="line">    <span class="keyword">for</span> ( var i = 0, l = arguments.length; i &lt; l; i++ )&#123;</div><div class="line">        a = a * arguments[i];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> a;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var args = Array.prototype.join.call( arguments, <span class="string">','</span> );</div><div class="line">    <span class="keyword">if</span> ( args <span class="keyword">in</span> cache )&#123;</div><div class="line">        <span class="built_in">return</span> cache[ args ];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> cache[ args ] = calculate.apply( null, arguments );</div><div class="line">&#125;&#125;)();</div></pre></td></tr></table></figure></p>
+<h2 id="延续局部变量的寿命"><a href="#延续局部变量的寿命" class="headerlink" title="延续局部变量的寿命"></a>延续局部变量的寿命</h2><p>img对象经常用于进行数据上报，如下所示：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var report = <span class="keyword">function</span>( src )&#123;</div><div class="line">    var img = new Image();</div><div class="line">    img.src = src;</div><div class="line">&#125;;</div><div class="line">report( <span class="string">'http://xxx.com/getUserInfo'</span> );</div></pre></td></tr></table></figure></p>
+<p>但是通过查询后台的记录我们得知，因为一些低版本浏览器的实现存在bug，在这些浏览器下使用report函数进行数据上报会丢失30%左右的数据，也就是说，report函数并不是每一次都成功发起了HTTP请求。丢失数据的原因是img是report函数中的局部变量，当report函数的调用结束后，img局部变量随即被销毁，而此时或许还没来得及发出HTTP请求，所以此次请求就会丢失掉。</p>
+<p>现在我们把img变量用闭包封闭起来，便能解决请求丢失的问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var report = (<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var imgs = [];</div><div class="line">    <span class="built_in">return</span> <span class="keyword">function</span>( src )&#123;</div><div class="line">       var img = new Image();</div><div class="line">       imgs.push( img );</div><div class="line">       img.src = src;</div><div class="line">    &#125;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<h2 id="闭包和面向对象设计"><a href="#闭包和面向对象设计" class="headerlink" title="闭包和面向对象设计"></a>闭包和面向对象设计</h2><p>过程与数据的结合是形容面向对象中的“对象”时经常使用的表达。对象以方法的形式包含了过程，而闭包则是在过程中以环境的形式包含了数据。通常用面向对象思想能实现的功能，用闭包也能实现。反之亦然。在JavaScript语言的祖先Scheme语言中，甚至都没有提供面向对象的原生设计，但可以使用闭包来实现一个完整的面向对象系统。</p>
+<p>下面来看看这段跟闭包相关的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var extent = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    var value = 0;</div><div class="line">    <span class="built_in">return</span> &#123;</div><div class="line">        call: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">            value++;</div><div class="line">            console.log( value );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">var extent = extent();</div><div class="line">extent.call();     // 输出：1</div><div class="line">extent.call();     // 输出：2</div><div class="line">extent.call();     // 输出：3</div></pre></td></tr></table></figure></p>
+<p>如果换成面向对象的写法，就是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var extent = &#123;</div><div class="line">    value: 0,</div><div class="line">    call: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        this.value++;</div><div class="line">        console.log( this.value );</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">extent.call();     // 输出：1</div><div class="line">extent.call();     // 输出：2</div><div class="line">extent.call();     // 输出：3</div></pre></td></tr></table></figure></p>
+<p>或者：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var Extent = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    this.value = 0;</div><div class="line">&#125;;</div><div class="line">Extent.prototype.call = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    this.value++;</div><div class="line">    console.log( this.value );</div><div class="line">&#125;;</div><div class="line">var extent = new Extent();</div><div class="line">extent.call();</div><div class="line">extent.call();</div><div class="line">extent.call();</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;闭包是 ECMAScript （JavaScript）最强大的特性之一，但用好闭包的前提是必须理解闭包。闭包的创建相对容易，人们甚至会在不经意间创建闭包，但这些无意创建的闭包却存在潜在的危害，尤其是在比较常见的浏览器环境下。&lt;/p&gt;
+&lt;p&gt;如果想要扬长避短地使用闭包这一特性，则必须了解它们的工作机制。而闭包工作机制的实现很大程度上有赖于标识符（或者说对象属性）解析过程中作用域的角色。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Node连接Mysql数据库</title>
+    <link href="https://vmto.github.io/2016/10/10/Node-MySQL/"/>
+    <id>https://vmto.github.io/2016/10/10/Node-MySQL/</id>
+    <published>2016-10-10T03:47:50.669Z</published>
+    <updated>2016-10-11T06:13:46.001Z</updated>
+    
+    <content type="html"><![CDATA[<p>通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。<br><a id="more"></a></p>
+<h2 id="安装Node-mysql"><a href="#安装Node-mysql" class="headerlink" title="安装Node-mysql"></a>安装Node-mysql</h2><p>通过npm安装mysql的软件包，通过它方便快速调用函数连接mysql数据库。进入项目文件夹，执行npm install mysql –save就行了。</p>
+<p>安装完，在项目文件夹的node_modules目录下会生成mysql的目录。</p>
+<h2 id="查看readme文档"><a href="#查看readme文档" class="headerlink" title="查看readme文档"></a>查看readme文档</h2><p>进入mysql目录中，查看README文档，这步很重要，不要到处百度Google搜索怎么用，因为由于版本的不一样，也许你得到的答案并不能使你成功连接数据库。毕竟Node发展如此之快。</p>
+<p>如果你认真读了README文档，接下来的步骤就不用再看了，避免由于版本不一致而误导你。</p>
+<h2 id="连接mysql数据库"><a href="#连接mysql数据库" class="headerlink" title="连接mysql数据库"></a>连接mysql数据库</h2><p>进入项目文档，新建TestMysql.js示例，编写如下代码:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var mysql      = require(<span class="string">'mysql'</span>);</div><div class="line"></div><div class="line">var db = mysql.createConnection(&#123;</div><div class="line">      host     : <span class="string">'localhost'</span>,</div><div class="line">      user     : <span class="string">'root'</span>,</div><div class="line">      password : <span class="string">'root'</span>,</div><div class="line">      database : <span class="string">'dbname'</span></div><div class="line">  &#125;);</div><div class="line">  </div><div class="line">  db.connect();</div><div class="line">  </div><div class="line">  connection.query(<span class="string">'SELECT u_name from tab_user'</span>, <span class="keyword">function</span>(err, data) &#123;</div><div class="line">      <span class="keyword">if</span> (err) throw err;</div><div class="line">      console.log(<span class="string">'name is: '</span>, data[0].u_name);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>连接基本参数：<br>host 主机名<br>user Mysql用户<br>password 密码<br>database 连接的数据库<br>db.connect()连接数据库<br>db.query()执行SQL语句<br>db.end()关闭连接。</p>
+<p>然后通过node TestMysql.js执行程序，确保你在执行之前已经启动了Mysql服务。</p>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><p>使用数据库无外乎增删改查，下面示例可能会对你有些帮助。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">var mysql      = require(<span class="string">'mysql'</span>);</div><div class="line"></div><div class="line">var db = mysql.createConnection(&#123;</div><div class="line">      host     : <span class="string">'localhost'</span>,</div><div class="line">      user     : <span class="string">'root'</span>,</div><div class="line">      password : <span class="string">'root'</span>,</div><div class="line">      database : <span class="string">'dbname'</span></div><div class="line">  &#125;);</div><div class="line">  </div><div class="line">  db.connect();</div><div class="line">  </div><div class="line">  // 增加记录</div><div class="line">  db.query(<span class="string">'insert into tab_user (u_name ,u_phone) values ("totter" , "13800138111")'</span>);</div><div class="line">  </div><div class="line">  // 删除记录</div><div class="line">  db.query(<span class="string">'delete from tab_user where u_name = "totter"'</span>);</div><div class="line">  </div><div class="line">  // 修改记录</div><div class="line">  db.query(<span class="string">'update tab_user set u_name = "totter123" where u_id = 1'</span>);</div><div class="line">  </div><div class="line">  // 查询记录</div><div class="line">  db.query(<span class="string">"select * from tab_user"</span> , <span class="keyword">function</span> (err, data)&#123;</div><div class="line">      <span class="keyword">if</span> (err)&#123;</div><div class="line">        throw err;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (data)&#123;</div><div class="line">        <span class="keyword">for</span>(var i = 0 ; i &lt; data.length ; i++)&#123;</div><div class="line">          console.log(<span class="string">"%d\t%s\t%s"</span>, data[i].u_id,data[i].u_name,data[i].u_phone);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>到此，Mysql数据库的初步连接就告一段落了，接下来就可以在Node项目中自行发挥了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
