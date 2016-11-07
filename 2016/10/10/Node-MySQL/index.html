@@ -1,0 +1,655 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node连接Mysql数据库">
+<meta property="og:url" content="https://vmto.github.io/2016/10/10/Node-MySQL/index.html">
+<meta property="og:site_name" content="全站联盟">
+<meta property="og:description" content="通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。">
+<meta property="og:updated_time" content="2016-10-11T06:13:46.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node连接Mysql数据库">
+<meta name="twitter:description" content="通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://vmto.github.io/2016/10/10/Node-MySQL/"/>
+
+
+  <title> Node连接Mysql数据库 | 全站联盟 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">全站联盟</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">不积跬步 无以至千里 不积小流 无以成江海</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Node连接Mysql数据库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-10T11:47:50+08:00" content="2016-10-10">
+              2016-10-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通常在NodeJS开发中我们经常涉及到操作数据库，尤其是 MySQL ，作为应用最为广泛的开源数据库则成为我们的首选，本篇就来介绍下如何通过NodeJS来操作 MySQL 数据库。<br><a id="more"></a></p>
+<h2 id="安装Node-mysql"><a href="#安装Node-mysql" class="headerlink" title="安装Node-mysql"></a>安装Node-mysql</h2><p>通过npm安装mysql的软件包，通过它方便快速调用函数连接mysql数据库。进入项目文件夹，执行npm install mysql –save就行了。</p>
+<p>安装完，在项目文件夹的node_modules目录下会生成mysql的目录。</p>
+<h2 id="查看readme文档"><a href="#查看readme文档" class="headerlink" title="查看readme文档"></a>查看readme文档</h2><p>进入mysql目录中，查看README文档，这步很重要，不要到处百度Google搜索怎么用，因为由于版本的不一样，也许你得到的答案并不能使你成功连接数据库。毕竟Node发展如此之快。</p>
+<p>如果你认真读了README文档，接下来的步骤就不用再看了，避免由于版本不一致而误导你。</p>
+<h2 id="连接mysql数据库"><a href="#连接mysql数据库" class="headerlink" title="连接mysql数据库"></a>连接mysql数据库</h2><p>进入项目文档，新建TestMysql.js示例，编写如下代码:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var mysql      = require(<span class="string">'mysql'</span>);</div><div class="line"></div><div class="line">var db = mysql.createConnection(&#123;</div><div class="line">      host     : <span class="string">'localhost'</span>,</div><div class="line">      user     : <span class="string">'root'</span>,</div><div class="line">      password : <span class="string">'root'</span>,</div><div class="line">      database : <span class="string">'dbname'</span></div><div class="line">  &#125;);</div><div class="line">  </div><div class="line">  db.connect();</div><div class="line">  </div><div class="line">  connection.query(<span class="string">'SELECT u_name from tab_user'</span>, <span class="keyword">function</span>(err, data) &#123;</div><div class="line">      <span class="keyword">if</span> (err) throw err;</div><div class="line">      console.log(<span class="string">'name is: '</span>, data[0].u_name);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>连接基本参数：<br>host 主机名<br>user Mysql用户<br>password 密码<br>database 连接的数据库<br>db.connect()连接数据库<br>db.query()执行SQL语句<br>db.end()关闭连接。</p>
+<p>然后通过node TestMysql.js执行程序，确保你在执行之前已经启动了Mysql服务。</p>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><p>使用数据库无外乎增删改查，下面示例可能会对你有些帮助。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">var mysql      = require(<span class="string">'mysql'</span>);</div><div class="line"></div><div class="line">var db = mysql.createConnection(&#123;</div><div class="line">      host     : <span class="string">'localhost'</span>,</div><div class="line">      user     : <span class="string">'root'</span>,</div><div class="line">      password : <span class="string">'root'</span>,</div><div class="line">      database : <span class="string">'dbname'</span></div><div class="line">  &#125;);</div><div class="line">  </div><div class="line">  db.connect();</div><div class="line">  </div><div class="line">  // 增加记录</div><div class="line">  db.query(<span class="string">'insert into tab_user (u_name ,u_phone) values ("totter" , "13800138111")'</span>);</div><div class="line">  </div><div class="line">  // 删除记录</div><div class="line">  db.query(<span class="string">'delete from tab_user where u_name = "totter"'</span>);</div><div class="line">  </div><div class="line">  // 修改记录</div><div class="line">  db.query(<span class="string">'update tab_user set u_name = "totter123" where u_id = 1'</span>);</div><div class="line">  </div><div class="line">  // 查询记录</div><div class="line">  db.query(<span class="string">"select * from tab_user"</span> , <span class="keyword">function</span> (err, data)&#123;</div><div class="line">      <span class="keyword">if</span> (err)&#123;</div><div class="line">        throw err;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (data)&#123;</div><div class="line">        <span class="keyword">for</span>(var i = 0 ; i &lt; data.length ; i++)&#123;</div><div class="line">          console.log(<span class="string">"%d\t%s\t%s"</span>, data[i].u_id,data[i].u_name,data[i].u_phone);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>到此，Mysql数据库的初步连接就告一段落了，接下来就可以在Node项目中自行发挥了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/avatar.gif" alt="Saturn WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/avatar.gif" alt="Saturn Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/10/closure/" rel="prev" title="闭包的更多作用">
+                闭包的更多作用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Saturn" />
+          <p class="site-author-name" itemprop="name">Saturn</p>
+          <p class="site-description motion-element" itemprop="description">用技术为体验提供无限可能</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vmto" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/echojs" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=96254415" target="_blank" title="音乐">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fex.baidu.com/" title="百度FEX" target="_blank">百度FEX</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.imweb.io/" title="腾讯FED" target="_blank">腾讯FED</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.alloyteam.com/" title="腾讯Alloy" target="_blank">腾讯Alloy</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.taobaofed.org/" title="淘宝FED" target="_blank">淘宝FED</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Node-mysql"><span class="nav-number">1.</span> <span class="nav-text">安装Node-mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看readme文档"><span class="nav-number">2.</span> <span class="nav-text">查看readme文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接mysql数据库"><span class="nav-number">3.</span> <span class="nav-text">连接mysql数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增删改查"><span class="nav-number">4.</span> <span class="nav-text">增删改查</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saturn</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

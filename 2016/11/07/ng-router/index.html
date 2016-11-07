@@ -1,0 +1,659 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="router," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJs之路由">
+<meta property="og:url" content="https://vmto.github.io/2016/11/07/ng-router/index.html">
+<meta property="og:site_name" content="全站联盟">
+<meta property="og:description" content="AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例">
+<meta property="og:updated_time" content="2016-11-07T04:28:42.838Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJs之路由">
+<meta name="twitter:description" content="AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://vmto.github.io/2016/11/07/ng-router/"/>
+
+
+  <title> AngularJs之路由 | 全站联盟 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">全站联盟</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">不积跬步 无以至千里 不积小流 无以成江海</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AngularJs之路由
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-07T11:45:09+08:00" content="2016-11-07">
+              2016-11-07
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>AngularJS的ng-route模块为控制器和视图提供了[Deep-Linking]URL。 通俗来讲，ng-route模块中的$routeService监测$location.url()的变化，并将它映射到预先定义的控制器。也就是在客户端进行URL的路由。 下面首先给出$route的使用示例<br><a id="more"></a></p>
+<h2 id="ngRouter基本使用"><a href="#ngRouter基本使用" class="headerlink" title="ngRouter基本使用"></a>ngRouter基本使用</h2><p>这是一个最基本的路由，运行成功显示Hello Router，<br>Angular的ng-include、ng-router使用了XMLHttpRequest对象，需通过http访问！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;</div><div class="line">    &lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div&gt;Hello Router&lt;/div&gt;'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>以上html引入两个js文件：angular.min.js、angular-route.min.js<br>angular-route.min.js压缩后只有5KB，<br>为了减少http请求，我把它合并到1个js文件里了。</p>
+<h2 id="ngRouter基本配置"><a href="#ngRouter基本配置" class="headerlink" title="ngRouter基本配置"></a>ngRouter基本配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">//引入依赖的模块ngRoute</div><div class="line"></div><div class="line">app.config();</div><div class="line">//传入一个匿名函数</div><div class="line">//在匿名函数中注入依赖：<span class="variable">$routeProvider</span></div><div class="line"></div><div class="line"><span class="variable">$routeProvider</span>.when();</div><div class="line">//when()两个参数(路径，对象)</div><div class="line">//when()第二个对象：</div><div class="line">//指定使用哪个控制器controller：ctrlName，</div><div class="line">//指定模板template：<span class="string">'&lt;div&gt;&lt;/div&gt;'</span></div><div class="line">//或者templateUrl：tplName.html</div></pre></td></tr></table></figure>
+<h2 id="ngRouter高级使用"><a href="#ngRouter高级使用" class="headerlink" title="ngRouter高级使用"></a>ngRouter高级使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;&lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.controller(<span class="string">'oneCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.name=<span class="string">'hello oneCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.controller(<span class="string">'twoCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.str=<span class="string">'hello twoCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div class="one"&gt; &#123;&#123;name&#125;&#125; &lt;a href="#/tow"&gt;下一页&lt;/a&gt;&lt;/div&gt;'</span>,</div><div class="line">                controller:<span class="string">'oneCtrl'</span></div><div class="line">            &#125;).when(<span class="string">'/tow'</span>,&#123;</div><div class="line">                template:<span class="string">'&lt;div class="tow"&gt;&#123;&#123;str&#125;&#125; &lt;a href="#/one"&gt;下一页&lt;/a&gt;&lt;/div&gt;'</span>,</div><div class="line">                controller:<span class="string">'twoCtrl'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>高级用法涉及到了controller，在实际应用中会经常把路由和控制配合使用。</p>
+<h2 id="ngRouter实战"><a href="#ngRouter实战" class="headerlink" title="ngRouter实战"></a>ngRouter实战</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html ng-app=<span class="string">"app"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;&lt;script src=<span class="string">"js/angular.min.js"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">    var app = angular.module(<span class="string">'app'</span>,[<span class="string">'ngRoute'</span>]);</div><div class="line">        app.controller(<span class="string">'oneCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.name=<span class="string">'hello oneCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.controller(<span class="string">'twoCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>)&#123;</div><div class="line">            <span class="variable">$scope</span>.str=<span class="string">'hello twoCtrl'</span></div><div class="line">        &#125;);</div><div class="line">        app.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line">            <span class="variable">$routeProvider</span>.when(<span class="string">'/one'</span>,&#123;</div><div class="line">                templateUrl:<span class="string">'two.html'</span>,//此处指向了一个html文件（文件内容同上）</div><div class="line">                controller:<span class="string">'oneCtrl'</span></div><div class="line">            &#125;).when(<span class="string">'/tow'</span>,&#123;</div><div class="line">                templateUrl:<span class="string">'two.html'</span>,//此处指向了一个html文件（文件内容同上）</div><div class="line">                controller:<span class="string">'twoCtrl'</span></div><div class="line">            &#125;).otherwise(&#123;</div><div class="line">                //其他路径（未定义的），一律跳转到指定路径（一般指向首页）</div><div class="line">                redirectTo:<span class="string">'/one'</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div ng-view&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>ngRoute很容易上手，实际项目中一般多用templateUrl指定模板，<br>也可以在模板里用ng-include进行嵌套，需要注意的是：<br>ng-include=””，引号内的值一般被angular认为是变量，<br>正确的写法应该是：ng-include=”‘xxx.html’”</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/avatar.gif" alt="Saturn WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/avatar.gif" alt="Saturn Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/router/" rel="tag">#router</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/18/data-type/" rel="next" title="data-type">
+                <i class="fa fa-chevron-left"></i> data-type
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Saturn" />
+          <p class="site-author-name" itemprop="name">Saturn</p>
+          <p class="site-description motion-element" itemprop="description">用技术为体验提供无限可能</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vmto" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/echojs" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=96254415" target="_blank" title="音乐">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fex.baidu.com/" title="百度FEX" target="_blank">百度FEX</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.imweb.io/" title="腾讯FED" target="_blank">腾讯FED</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.alloyteam.com/" title="腾讯Alloy" target="_blank">腾讯Alloy</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.taobaofed.org/" title="淘宝FED" target="_blank">淘宝FED</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ngRouter基本使用"><span class="nav-number">1.</span> <span class="nav-text">ngRouter基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngRouter基本配置"><span class="nav-number">2.</span> <span class="nav-text">ngRouter基本配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngRouter高级使用"><span class="nav-number">3.</span> <span class="nav-text">ngRouter高级使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngRouter实战"><span class="nav-number">4.</span> <span class="nav-text">ngRouter实战</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saturn</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
