@@ -1,0 +1,672 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="全站联盟" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="经常有同学问关于gulp编译scss文件的技术，由于我比较喜欢Vue组件化开发方式，所以对webpack研究的多一些。今天专门针对刚接触前端自动化的同学写个小小的笔记，当他们在问我的时候，直接把这篇笔记扔过去^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端构建工具gulp入门之scss">
+<meta property="og:url" content="https://vmto.github.io/2016/11/25/gulp-scss/index.html">
+<meta property="og:site_name" content="全站联盟">
+<meta property="og:description" content="经常有同学问关于gulp编译scss文件的技术，由于我比较喜欢Vue组件化开发方式，所以对webpack研究的多一些。今天专门针对刚接触前端自动化的同学写个小小的笔记，当他们在问我的时候，直接把这篇笔记扔过去^_^">
+<meta property="og:updated_time" content="2016-11-25T05:36:09.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端构建工具gulp入门之scss">
+<meta name="twitter:description" content="经常有同学问关于gulp编译scss文件的技术，由于我比较喜欢Vue组件化开发方式，所以对webpack研究的多一些。今天专门针对刚接触前端自动化的同学写个小小的笔记，当他们在问我的时候，直接把这篇笔记扔过去^_^">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://vmto.github.io/2016/11/25/gulp-scss/"/>
+
+
+  <title> 前端构建工具gulp入门之scss | 全站联盟 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">全站联盟</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">不积跬步 无以至千里 不积小流 无以成江海</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端构建工具gulp入门之scss
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-25T10:59:56+08:00" content="2016-11-25">
+              2016-11-25
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>经常有同学问关于gulp编译scss文件的技术，由于我比较喜欢Vue组件化开发方式，所以对webpack研究的多一些。<br>今天专门针对刚接触前端自动化的同学写个小小的笔记，当他们在问我的时候，直接把这篇笔记扔过去^_^<br><a id="more"></a></p>
+<h3 id="说在前面的话"><a href="#说在前面的话" class="headerlink" title="说在前面的话"></a>说在前面的话</h3><ul>
+<li>首先，gulp是众多构建工具其中的一个</li>
+<li>例如，老牌的grunt、崛起的webpack</li>
+<li>其次，略懂nodeJs和npm、git命令</li>
+<li>以下命令均在Git Bash下完成，兼容Linux和Mac</li>
+</ul>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><a href="https://nodejs.org/en/" target="_blank" rel="external">安装nodeJs</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#查看是否安装成功：</span></div><div class="line">node -v</div><div class="line">npm -v</div></pre></td></tr></table></figure></p>
+<p>安装gulp<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">npm install -g gulp</div><div class="line"></div><div class="line"><span class="comment">#查看是否安装成功：</span></div><div class="line">gulp -v</div></pre></td></tr></table></figure></p>
+<h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，初始化一个工程文件：<font color="red">package.json</font>，记录安装的依赖包，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"name"</span>: <span class="string">"gulp-scss"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</div><div class="line">  <span class="string">"description"</span>: <span class="string">""</span>,</div><div class="line">  <span class="string">"main"</span>: <span class="string">"index.js"</span>,</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"keywords"</span>: [],</div><div class="line">  <span class="string">"author"</span>: <span class="string">""</span>,</div><div class="line">  <span class="string">"license"</span>: <span class="string">"ISC"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后，安装gulp并记录到：<font color="red">package.json</font><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">npm install gulp --save-dev</div><div class="line"></div><div class="line"><span class="comment">#简写命令</span></div><div class="line">npm i gulp -D</div></pre></td></tr></table></figure></p>
+<h3 id="配置gulp"><a href="#配置gulp" class="headerlink" title="配置gulp"></a>配置gulp</h3><p>用gulp编译scss，只需要从npm上安装对应的解析器即可：<font color="blue">gulp-sass</font><br>真正开发的时候，不可能写一点scss就编译一次，而是保存完自动编译，需要：<font color="blue">gulp-rename</font><br>gulp的配置存储在：<font color="blue">gulpfile.js</font> 文件里面，这个文件名是固定写法。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">//引入Gulp模块</div><div class="line">var gulp = require(<span class="string">'gulp'</span>);</div><div class="line"></div><div class="line">// 引入依赖模块</div><div class="line">var sass = require(<span class="string">'gulp-sass'</span>);</div><div class="line">var rename = require(<span class="string">'gulp-rename'</span>);</div><div class="line"></div><div class="line">// 编译Sass</div><div class="line">gulp.task(<span class="string">'sass'</span>, <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    gulp.src(<span class="string">'./scss/*.scss'</span>)</div><div class="line">        .pipe(sass())</div><div class="line">        .pipe(gulp.dest(<span class="string">'./css'</span>));</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// 默认任务</div><div class="line">gulp.task(<span class="string">'default'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    gulp.run(<span class="string">'sass'</span>);</div><div class="line"></div><div class="line">    // 监听文件变化</div><div class="line">    gulp.watch([<span class="string">'./scss/*.scss'</span>], <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        gulp.run(<span class="string">'sass'</span>, <span class="string">'scripts'</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>说到底，也就是个js文件，写Gulp配置跟node开发很相似，用到哪个模块require就可以。<br>Gulp只有五个方法： <font color="green">task</font>、<font color="green">src</font>、<font color="green">dest</font>、<font color="green">watch</font>和<font color="green">run</font>。<br>配置完成，使用之前，要把gulp配置中的包（模块）下载到本地项目：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#用到3个模块</span></div><div class="line">npm i gulp gulp-sass gulp-rename -D</div></pre></td></tr></table></figure></p>
+<h3 id="Sass任务"><a href="#Sass任务" class="headerlink" title="Sass任务"></a>Sass任务</h3><p>为第一条任务：<font color="blue">test</font> 添加style.scss文件，现实自动编译：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#scss/style.scss</span></div><div class="line"></div><div class="line"><span class="variable">$red</span>:red;</div><div class="line"><span class="variable">$blue</span>:blue;</div><div class="line"></div><div class="line">div&#123;</div><div class="line">    a&#123;</div><div class="line">        //可以这样注释，并不会编译到css里面</div><div class="line">        color: <span class="variable">$red</span>;</div><div class="line">        &amp;:hover&#123;</div><div class="line">            color: <span class="variable">$blue</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">ul&#123;</div><div class="line">    li&#123;</div><div class="line">       //蓝色</div><div class="line">       color: <span class="variable">$blue</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行Gulp：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#运行默认任务</span></div><div class="line">gulp default</div><div class="line"></div><div class="line"><span class="comment">#运行默认任务的简写：</span></div><div class="line">gulp</div><div class="line"></div><div class="line"><span class="comment">#任务多的时候，可以单独指定某个任务</span></div><div class="line">gulp sass</div></pre></td></tr></table></figure></p>
+<p>运行成功：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#css/style.css</span></div><div class="line"></div><div class="line">div a &#123;</div><div class="line">    color: <span class="comment">#f00;</span></div><div class="line">&#125;</div><div class="line">div a:hover &#123;</div><div class="line">    color: <span class="comment">#ff0;</span></div><div class="line">&#125;</div><div class="line">ul li &#123;</div><div class="line">    color: <span class="comment">#ff0;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">node_modules</div><div class="line">  -.bin</div><div class="line">  -gulp</div><div class="line">  -gulp-rename</div><div class="line">  -gulp-sass</div><div class="line">scss</div><div class="line">  -style.scss</div><div class="line">css</div><div class="line">  -style.css</div><div class="line">gulpfile.js</div><div class="line">package.json</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/node-demo/gulp-scss" target="_blank" rel="external">工程项目Git下载地址</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/WeChat.jpg" alt="Saturn WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Saturn Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/22/vue2/" rel="next" title="Vue2.0 踩坑、填坑指南">
+                <i class="fa fa-chevron-left"></i> Vue2.0 踩坑、填坑指南
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Saturn" />
+          <p class="site-author-name" itemprop="name">Saturn</p>
+          <p class="site-description motion-element" itemprop="description">用技术为体验提供无限可能</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vmto" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/echojs" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=96254415" target="_blank" title="音乐">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fex.baidu.com/" title="百度FEX" target="_blank">百度FEX</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.imweb.io/" title="腾讯FED" target="_blank">腾讯FED</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.alloyteam.com/" title="腾讯Alloy" target="_blank">腾讯Alloy</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.taobaofed.org/" title="淘宝FED" target="_blank">淘宝FED</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说在前面的话"><span class="nav-number">1.</span> <span class="nav-text">说在前面的话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建工程"><span class="nav-number">3.</span> <span class="nav-text">创建工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置gulp"><span class="nav-number">4.</span> <span class="nav-text">配置gulp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sass任务"><span class="nav-number">5.</span> <span class="nav-text">Sass任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目结构"><span class="nav-number">6.</span> <span class="nav-text">项目结构</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saturn</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
